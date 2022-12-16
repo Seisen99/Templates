@@ -295,7 +295,7 @@ after_bundle do
   HTML
 
   run 'npm install animejs --save'
-  run 'yarn add aos@next'
+  run 'npm install --save aos@next'
 
   file 'app/javascript/controllers/pages_list_controller.js', <<~JS
         import { Controller } from "@hotwired/stimulus"
