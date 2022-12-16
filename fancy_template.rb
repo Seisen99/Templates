@@ -65,8 +65,61 @@ HTML
 inject_into_file 'app/views/layouts/application.html.erb', after: '<body>' do
   <<~HTML
     <%= render "shared/flashes" %>
+    <%= render "shared/navbar" %>
   HTML
 end
+
+inject_into_file 'app/views/layouts/application.html.erb', before: '</head>' do
+  <<~HTML
+  <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.5/dist/flowbite.min.css" />
+  HTML
+end
+
+inject_into_file 'app/views/layouts/application.html.erb', after: '</html>' do
+  <<~HTML
+  <script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></script>
+  HTML
+end
+
+file 'app/views/shared/_navbar.html.erb', <<~HTML
+<nav class="bg-gray-700 py-2 px-4 flex justify-between items-center">
+  <div class="flex items-center">
+    <a href="#" class="text-white font-bold text-xl tracking-tight hover:bg-gray-800">My Site</a>
+  </div>
+  <div class="flex items-center">
+    <button class="text-white font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800">Button 1</button>
+    <button class="text-white font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800 ml-4">Button 2</button>
+    <button class="text-white font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800 ml-4">Button 3</button>
+    <button class="text-white font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800 ml-4">Button 4</button>
+
+<button id="dropdownDefault" data-dropdown-toggle="dropdown" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Dropdown button <svg class="ml-2 w-4 h-4" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
+<!-- Dropdown menu -->
+<div id="dropdown" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
+    <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefault">
+      <li>
+        <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+      </li>
+      <li>
+        <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+      </li>
+      <li>
+        <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
+      </li>
+      <li>
+        <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</a>
+      </li>
+    </ul>
+</div>
+        <% if user_signed_in? %>
+          <%= link_to "Logout", destroy_user_session_path,  data: {turbo_method: :delete}, class: "block px-4 py-2 text-white font-bold hover:bg-gray-700" %>
+        <% else %>
+          <%= link_to "Sign In", new_user_session_path, class: "block px-4 py-2 text-white font-bold hover:bg-gray-700" %>
+        <% end %>
+
+    </div>
+  </div>
+</nav>
+HTML
 
 gsub_file(
   'app/views/layouts/application.html.erb',
@@ -162,13 +215,6 @@ after_bundle do
 
   remove_file 'app/views/pages/home.html.erb'
   file 'app/views/pages/home.html.erb', <<~HTML
-    <div class="fixed top-0 right-0 m-2 mt-3">
-      <% if user_signed_in? %>
-        <%= link_to "Disconnect", destroy_user_session_path,  data: {turbo_method: :delete}, class: "bg-sky-500 hover:bg-blue-700 text-gray-300 font-bold py-2 px-4 rounded-full text-sm" %>
-      <% else %>
-        <%= link_to "Sign In", new_user_session_path, class: "bg-sky-500 hover:bg-blue-700 text-gray-300 font-bold py-2 px-4 rounded-full text-sm" %>
-      <% end %>
-    </div>
     <div class="flex justify-center w-screen items-center h-screen">
       <h1 id="pages-list"></h1>
     </div>
