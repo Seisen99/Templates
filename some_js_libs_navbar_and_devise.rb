@@ -274,16 +274,24 @@ after_bundle do
 
   remove_file 'app/views/pages/home.html.erb'
   file 'app/views/pages/home.html.erb', <<~HTML
-    <div class="flex justify-center w-screen items-center h-screen">
-      <h1 id="pages-list" data-controller="pages-list">
-        <div>
-            <h1 id="pages-list" data-pages-list-target="textElement" class="text-element text-6xl pb-7 pl-4 text-sky-500">Hello! Welcome to your new rails project!</h1>
-            <p class="text-gray-300  text-2xl mt-4 p-4">In this app you can use TailwindCSS and Anime.js with React 🥳!</p>
-            <p class="text-gray-300  text-2xl p-4">You can also use StimulusJS and Turbo too 🤯.</p>
-            <p class="text-gray-300  text-2xl p-4">Have fun!</p>
-        </div>
-      </h1>
+  <div class="flex justify-center w-screen items-center h-screen">
+  <h1 id="pages-list" data-controller="pages-list">
+    <div>
+        <h1  data-aos="zoom-in" data-aos-duration="10000" data-aos-easing="linear" id="pages-list" data-pages-list-target="textElement" class="text-element text-6xl pb-7 pl-4 text-sky-500">Hello! Welcome to your new rails project!</h1>
+        <p data-aos="fade-right"
+           data-aos-offset="300"
+           data-aos-easing="ease-in-sine"
+           class="text-gray-300  text-2xl mt-4 p-4">
+           In this app you can use TailwindCSS, Anime.js and AOS.js🥳!
+        </p>
+        <p data-aos="fade-left"
+           data-aos-offset="300"
+           data-aos-easing="ease-in-sine"
+           class="text-gray-300  text-2xl p-4">You can also use StimulusJS, TurboRails and Devise is setup too 🤯.</p>
+        <p class="text-4xl p-4 font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-pink-400 to-red-600">Have fun!</p>
     </div>
+  </h1>
+</div>
   HTML
 
   run 'npm install animejs --save'
@@ -370,6 +378,17 @@ after_bundle do
 
     import PagesListController from "./pages_list_controller"
     application.register("pages-list", PagesListController)
+  JS
+
+  remove_file 'app/javascript/applcation.js'
+  file 'app/javascript/application.js', <<~JS
+      // Entry point for the build script in your package.json
+    import "@hotwired/turbo-rails"
+    import "./controllers"
+    import AOS from 'aos';
+    import 'aos/dist/aos.css'; // You can also use <link> for styles
+    // ..
+    AOS.init();
   JS
 
   # Environments

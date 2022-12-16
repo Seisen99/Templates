@@ -36,3 +36,8 @@ and the import of the hotwire (import { Turbo, cable } from "@hotwired/turbo-rai
 
 ## Template 1 with Tailwind, Postgresql, Esbuild, React, Animejs and Devise (still with Stimulus and turbo-rails) :
 rails new myapp2test --database=postgresql --javascript esbuild --css tailwind -m https://raw.githubusercontent.com/Seisen99/Templates/main/fancy_template.rb
+
+
+# TEMPLATE 2 : Rails new app with tailwind, postgresql and esbuild, anime.js and aos.js.
+## With devise gem set up, home page and about page, and a navbar with a dropdown menu.
+> rails new appname --database=postgresql --javascript esbuild --css tailwind -m https://raw.githubusercontent.com/Seisen99/Templates/main/some_js_libs_navbar_and_devise.rb
