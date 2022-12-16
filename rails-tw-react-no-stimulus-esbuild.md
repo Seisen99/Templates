@@ -32,3 +32,7 @@ import "./components/your_component_name"
 
 you can delete the import of the stimulus controller  (import "controllers" from "@hotwired/stimulus" )
 and the import of the hotwire (import { Turbo, cable } from "@hotwired/turbo-rails" )
+
+
+## Template 1 with Tailwind, Postgresql, Esbuild, React, Animejs and Devise (still with Stimulus and turbo-rails) :
+rails new myapp2test --database=postgresql --javascript esbuild --css tailwind -m https://raw.githubusercontent.com/Seisen99/Templates/main/fancy_template.rb
