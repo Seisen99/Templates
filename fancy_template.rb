@@ -177,16 +177,75 @@ after_bundle do
   ########################################
   rails_command 'db:migrate'
   generate('devise:views')
-  gsub_file(
-    'app/views/devise/registrations/new.html.erb',
-    '<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>',
-    '<%= form_for(resource, as: resource_name, url: registration_path(resource_name), data: { turbo: :false }) do |f| %>'
-  )
-  gsub_file(
-    'app/views/devise/sessions/new.html.erb',
-    '<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>',
-    '<%= form_for(resource, as: resource_name, url: session_path(resource_name), data: { turbo: :false }) do |f| %>'
-  )
+  #better forms
+  #######################################
+  remove_file 'app/views/devise/registrations/new.html.erb'
+  file 'app/views/devise/registrations/new.html.erb', <<~HTML
+  <div class="flex justify-center items-center flex-col">
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), data: { turbo: :false }, class: "bg-gray-800 py-4 px-6") do |f| %>
+    <h2 class="text-white font-bold text-center">Sign up</h2>
+    <%= render "devise/shared/error_messages", resource: resource %>
+
+    <div class="field">
+      <%= f.label :email, class: "text-white font-bold" %><br />
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "bg-gray-700 py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800 text-white font-bold" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :password, class: "text-white font-bold" %>
+      <% if @minimum_password_length %>
+      <em>(<%= @minimum_password_length %> characters minimum)</em>
+      <% end %><br />
+      <%= f.password_field :password, autocomplete: "new-password", class: "bg-gray-700 py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800 text-white font-bold" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :password_confirmation, class: "text-white font-bold" %><br />
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "bg-gray-700 py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800 text-white font-bold" %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Sign up", class: "text-white font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800" %>
+    </div>
+  <% end %>
+
+  <%= render "devise/shared/links" %>
+</div>
+
+  HTML
+  remove_file 'app/views/devise/sessions/new.html.erb'
+  file 'app/views/devise/sessions/new.html.erb', <<~HTML
+  <div class="flex justify-center items-center flex-col">
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: { turbo: :false }, class: "bg-gray-800 py-4 px-6") do |f| %>
+    <h2 class="text-white font-bold text-center">Log in</h2>
+    <div class="field">
+      <%= f.label :email, class: "text-white font-bold" %><br />
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "bg-gray-700 py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800 text-white font-bold" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :password, class: "text-white font-bold" %><br />
+      <%= f.password_field :password, autocomplete: "current-password", class: "bg-gray-700 py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800 text-white font-bold" %>
+    </div>
+
+    <% if devise_mapping.rememberable? %>
+      <div class="field">
+        <%= f.check_box :remember_me, class: "text-white font-bold" %>
+        <%= f.label :remember_me, class: "text-white font-bold" %>
+      </div>
+    <% end %>
+
+    <div class="actions">
+      <%= f.submit "Log in", class: "text-white font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800" %>
+    </div>
+  <% end %>
+  <div class="field">
+  </div>
+    <%= render "devise/shared/links" %>
+</div>
+HTML
+
+
   link_to = <<~HTML
     <p>Unhappy? <%= link_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
   HTML
