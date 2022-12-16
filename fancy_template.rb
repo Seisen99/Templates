@@ -94,23 +94,23 @@ file 'app/views/shared/_navbar.html.erb', <<~HTML
 
 <button id="dropdownDefault" data-dropdown-toggle="dropdown" class="text-white font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800" type="button">Dropdown button</button>
 <!-- Dropdown menu -->
-<div id="dropdown" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
-    <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefault">
+<div id="dropdown" class="hidden z-10 w-44 bg-gray-700 rounded divide-y divide-gray-100 shadow text-white">
+    <ul class="py-1 text-sm text-white dark:text-gray-200" aria-labelledby="dropdownDefault">
       <li>
         <% if user_signed_in? %>
-          <%= link_to "Sign out", destroy_user_session_path,  data: {turbo_method: :delete}, class: "block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" %>
+          <%= link_to "Sign out", destroy_user_session_path,  data: {turbo_method: :delete}, class: "block py-2 px-4 hover:bg-gray-800 dark:hover:bg-gray-600 dark:hover:text-white" %>
         <% else %>
-          <%= link_to "Sign In", new_user_session_path, class: "block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" %>
+          <%= link_to "Sign In", new_user_session_path, class: "block py-2 px-4  hover:bg-gray-800 dark:hover:bg-gray-600 dark:hover:text-white" %>
         <% end %>
       </li>
       <li>
-        <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Button 1</a>
+        <a href="#" class="block py-2 px-4  hover:bg-gray-800 dark:hover:bg-gray-600 dark:hover:text-white">Button 1</a>
       </li>
       <li>
-        <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Button 2</a>
+        <a href="#" class="block py-2 px-4  hover:bg-gray-800 dark:hover:bg-gray-600 dark:hover:text-white">Button 2</a>
       </li>
       <li>
-        <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Button 3</a>
+        <a href="#" class="block py-2 px-4  hover:bg-gray-800 dark:hover:bg-gray-600 dark:hover:text-white">Button 3</a>
       </li>
     </ul>
 </div>
