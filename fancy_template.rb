@@ -22,40 +22,44 @@ gsub_file('Gemfile', '# gem "sassc-rails"', 'gem "sassc-rails"')
 # Flashes
 ########################################
 file 'app/views/shared/_flashes.html.erb', <<~HTML
-  <% if notice %>
-    <div class="fixed inset-0 flex items-center justify-center px-4 py-6 pointer-events-none sm:p-6 sm:items-start sm:justify-start" style="background-color: rgba(0, 0, 0, 0.5);" id="notice">
-      <div class="max-w-sm w-full bg-blue-100 border-t-4 border-blue-500 rounded-b text-blue-700 px-4 py-3 shadow-md m-1" role="alert">
-        <div class="flex">
-          <div class="py-1"><svg class="fill-current h-6 w-6 text-blue-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
-          <div>
-            <p class="font-bold">Notice</p>
-            <p class="text-sm"><%= notice %></p>
-          </div>
+<% if notice %>
+  <div class="fixed inset-0 flex items-center justify-center px-4 py-6 pointer-events-none sm:p-6 sm:items-start sm:justify-start" style="background-color: rgba(0, 0, 0, 0.5);" id="notice">
+    <div class="max-w-sm w-full bg-blue-100 border-t-4 border-blue-500 rounded-b text-blue-700 px-4 py-3 shadow-md m-1" role="alert">
+      <div class="flex">
+        <div class="py-1"><svg class="fill-current h-6 w-6 text-blue-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
+        <div>
+          <p class="font-bold">Notice</p>
+          <p class="text-sm"><%= notice %></p>
         </div>
       </div>
     </div>
-  <% end %>
-  <% if alert %>
-    <div class="fixed inset-0 flex items-center justify-center px-4 py-6 pointer-events-none sm:p-6 sm:items-start sm:justify-start" style="background-color: rgba(0, 0, 0, 0.5);" id="alert">
-      <div class="max-w-sm w-full bg-yellow-100 border-t-4 border-yellow-600 rounded-b text-yellow-700 px-4 py-3 shadow-md m-1" role="alert">
-        <div class="flex">
-          <div class="py-1"><svg class="fill-current h-6 w-6 text-yellow-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 5h2v6H9V5zm0 8h2v2H9v-2z"/></svg></div>
-          <div>
-            <p class="font-bold">Alert</p>
-            <p class="text-sm"><%= alert %></p>
-          </div>
+  </div>
+  <script>
+  window.setTimeout(function() {
+    var notice = document.getElementById("notice");
+    notice.style.display = "none";
+    }, 3000);
+</script>
+<% end %>
+<% if alert %>
+  <div class="fixed inset-0 flex items-center justify-center px-4 py-6 pointer-events-none sm:p-6 sm:items-start sm:justify-start" style="background-color: rgba(0, 0, 0, 0.5);" id="alert">
+    <div class="max-w-sm w-full bg-yellow-100 border-t-4 border-yellow-600 rounded-b text-yellow-700 px-4 py-3 shadow-md m-1" role="alert">
+      <div class="flex">
+        <div class="py-1"><svg class="fill-current h-6 w-6 text-yellow-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 5h2v6H9V5zm0 8h2v2H9v-2z"/></svg></div>
+        <div>
+          <p class="font-bold">Alert</p>
+          <p class="text-sm"><%= alert %></p>
         </div>
       </div>
     </div>
-  <% end %>
+  </div>
   <script>
     window.setTimeout(function() {
-      var notice = document.getElementById("notice");
       var alert = document.getElementById("alert");
-      notice.style.display = "none";
       alert.style.display = "none";
       }, 3000);
   </script>
+<% end %>
 HTML
 
 inject_into_file 'app/views/layouts/application.html.erb', after: '<body>' do
