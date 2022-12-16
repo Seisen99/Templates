@@ -374,7 +374,7 @@ after_bundle do
     application.register("pages-list", PagesListController)
   JS
 
-  remove_file 'app/javascript/applcation.js'
+  remove_file 'app/javascript/application.js'
   file 'app/javascript/application.js', <<~JS
       // Entry point for the build script in your package.json
     import "@hotwired/turbo-rails"
