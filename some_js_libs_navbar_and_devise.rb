@@ -363,12 +363,6 @@ after_bundle do
         }
   JS
 
-  inject_into_file 'tailwind.config.js', after: "'./app/assets/stylesheets/**/*.css'," do
-    <<~JS
-      './app/javascript/components/*.{js,jsx,ts,tsx}',
-    JS
-  end
-
   remove_file 'app/javascript/controllers/index.js'
   file 'app/javascript/controllers/index.js', <<~JS
     import { application } from "./application"
