@@ -84,7 +84,7 @@ end
 file 'app/views/shared/_navbar.html.erb', <<~HTML
   <nav class="bg-gray-700 py-2 px-4 flex justify-between items-center">
     <div class="flex items-center">
-      <a href="#" class="text-white font-bold text-xl tracking-tight hover:bg-gray-800">My Site</a>
+    <%= link_to "My site", root_path, class: "text-white font-bold text-xl tracking-tight hover:bg-gray-800" %>
     </div>
     <div class="flex items-center">
       <button class="text-white font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800">Button 1</button>
@@ -275,95 +275,87 @@ after_bundle do
   remove_file 'app/views/pages/home.html.erb'
   file 'app/views/pages/home.html.erb', <<~HTML
     <div class="flex justify-center w-screen items-center h-screen">
-      <h1 id="pages-list"></h1>
+      <h1 id="pages-list" data-controller="pages-list">
+        <div>
+            <h1 id="pages-list" data-pages-list-target="textElement" class="text-element text-6xl pb-7 pl-4 text-sky-500">Hello! Welcome to your new rails project!</h1>
+            <p class="text-gray-300  text-2xl mt-4 p-4">In this app you can use TailwindCSS and Anime.js with React 🥳!</p>
+            <p class="text-gray-300  text-2xl p-4">You can also use StimulusJS and Turbo too 🤯.</p>
+            <p class="text-gray-300  text-2xl p-4">Have fun!</p>
+        </div>
+      </h1>
     </div>
   HTML
 
-  run 'yarn add react react-dom'
   run 'npm install animejs --save'
+  run 'yarn add aos@next'
 
-  file 'app/javascript/components/pages_list.jsx', <<~JS
-    import React from 'react';
-    import ReactDOM from 'react-dom/client';
-    // Import the Anime.js library
-    import anime from 'animejs/lib/anime.es.js';
-
-    class PagesList extends React.Component {
-      componentDidMount() {
-        // Select the text element that you want to animate
-        const textElement = document.querySelector('.text-element');
-
-        // Split the text into separate letters
-        const letters = textElement.textContent.split('');
-
-        // Empty the text element
-        textElement.textContent = '';
-
-        // Add each letter as a separate element
-        letters.forEach((letter, index) => {
-          // If the current letter is a space, add a space element
-          if (letter === ' ') {
-            const spaceElement = document.createElement('span');
-            spaceElement.innerHTML = '&nbsp;';
-            spaceElement.style.display = 'inline-block';
-            textElement.appendChild(spaceElement);
-          } else {
-            const letterElement = document.createElement('span');
-            letterElement.textContent = letter;
-            letterElement.style.display = 'inline-block';
-            textElement.appendChild(letterElement);
-
-            // Set the initial position of each letter to be off the screen at the top
+  file 'app/javascript/controllers/pages_list_controller.js', <<~JS
+        import { Controller } from "@hotwired/stimulus"
+        import anime from 'animejs/lib/anime.es.js';
+        import AOS from 'aos';
+        import 'aos/dist/aos.css'; // You can also use <link> for styles
+    // ..
+        AOS.init();
 
 
 
-            // Add a mouseover event listener to each letter element
-            letterElement.addEventListener('mouseover', () => {
-              // Use the Anime.js animate() method to animate the letter element
-              anime({
-                targets: letterElement,
-                scale: [1, 1.5],  // zoom in by 50%
-                duration: 500,  // animate over 500 milliseconds
+        export default class extends Controller {
+          static targets = ['textElement'];
 
-              });
-            });
+          connect() {
+            // Select the text element that you want to animate
+            const textElement = this.textElementTarget;
 
-            // Add a mouseout event listener to each letter element
-            letterElement.addEventListener('mouseout', () => {
-              // Use the Anime.js animate() method to animate the letter element back to its original size
-              anime({
-                targets: letterElement,
-                scale: [1, 1.4, 1, 1.25, 1, 1.15, 1],
-                easing: 'easeInOutSine',
-                duration: 1000,
-              });
+            // Split the text into separate letters
+            const letters = textElement.textContent.split('');
+
+            // Empty the text element
+            textElement.textContent = '';
+
+            // Add each letter as a separate element
+            letters.forEach((letter, index) => {
+              // If the current letter is a space, add a space element
+              if (letter === ' ') {
+                const spaceElement = document.createElement('span');
+                spaceElement.innerHTML = '&nbsp;';
+                spaceElement.style.display = 'inline-block';
+                textElement.appendChild(spaceElement);
+              } else {
+                const letterElement = document.createElement('span');
+                letterElement.textContent = letter;
+                letterElement.style.display = 'inline-block';
+                textElement.appendChild(letterElement);
+
+                // Set the initial position of each letter to be off the screen at the top
+
+
+
+                // Add a mouseover event listener to each letter element
+                letterElement.addEventListener('mouseover', () => {
+                  // Use the Anime.js animate() method to animate the letter element
+                  anime({
+                    targets: letterElement,
+                    scale: [1, 1.5],  // zoom in by 50%
+                    duration: 500,  // animate over 500 milliseconds
+
+                  });
+                });
+
+                // Add a mouseout event listener to each letter element
+                letterElement.addEventListener('mouseout', () => {
+                  // Use the Anime.js animate() method to animate the letter element back to its original size
+                  anime({
+                    targets: letterElement,
+                    scale: [1, 1.4, 1, 1.25, 1, 1.15, 1],
+                    easing: 'easeInOutSine',
+                    duration: 1000,
+                  });
+                });
+              }
             });
           }
-        });
-      }
-
-      render() {
-        return (
-          <div>
-            <h1 className="text-element text-6xl pb-7 pl-4 text-sky-500">Hello! Welcome to your new Rails project!</h1>
-            <p className="text-gray-300  text-2xl mt-4 p-4">In this app you can use TailwindCSS and Anime.js with React 🥳!</p>
-            <p className="text-gray-300  text-2xl p-4">You can use StimulusJS and Turbo too 🤯.</p>
-            <p className="text-gray-300  text-2xl p-4">Have fun!</p>
-        </div>
-        );
-      }
-    }
-    const pagesList = document.getElementById('pages-list');
-    // Use the createRoot() method to render the PagesList component
-    const root = ReactDOM.createRoot(pagesList);
-    root.render(<PagesList />);
+        }
   JS
-
-  inject_into_file 'app/javascript/application.js' do
-    <<~JS
-      import "./components/pages_list"
-    JS
-  end
 
   inject_into_file 'tailwind.config.js', after: "'./app/assets/stylesheets/**/*.css'," do
     <<~JS
