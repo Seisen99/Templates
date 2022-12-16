@@ -297,8 +297,6 @@ after_bundle do
     // ..
         AOS.init();
 
-
-
         export default class extends Controller {
           static targets = ['textElement'];
 
@@ -362,6 +360,17 @@ after_bundle do
       './app/javascript/components/*.{js,jsx,ts,tsx}',
     JS
   end
+
+  remove_file 'app/javascript/controllers/index.js'
+  file 'app/javascript/controllers/index.js', <<~JS
+    import { application } from "./application"
+
+    import HelloController from "./hello_controller"
+    application.register("hello", HelloController)
+
+    import PagesListController from "./pages_list_controller"
+    application.register("pages-list", PagesListController)
+  JS
 
   # Environments
   ########################################
