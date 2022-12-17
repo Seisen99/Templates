@@ -1,5 +1,5 @@
 # > Rails new app with tailwind, postgresql and esbuild
-rails new myapp --database=postgresql --javascript esbuild --css tailwind -m fancy-template.rb
+rails new myapp --database=postgresql --javascript esbuild --css tailwind
 
 # > Add react
 yarn add react
@@ -39,5 +39,5 @@ rails new myapp2test --database=postgresql --javascript esbuild --css tailwind -
 
 
 # TEMPLATE 2 : Rails new app with tailwind, postgresql and esbuild, anime.js and aos.js.
-## With devise gem set up, home page and about page, and a navbar with a dropdown menu.
-> rails new appname --database=postgresql --javascript esbuild --css tailwind -m https://raw.githubusercontent.com/Seisen99/Templates/main/some_js_libs_navbar_and_devise.rb
+## With devise gem set up, home page and about page, and a navbar with a dropdown menu. (AOS works only with the rails s + yarn build watch, dunno why it doesn't work with ./bin/dev command on local...)
+> rails new appname -d postgresql -j esbuild --css tailwind -m https://raw.githubusercontent.com/Seisen99/Templates/main/some_js_libs_navbar_and_devise.rb
