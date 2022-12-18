@@ -279,8 +279,8 @@ after_bundle do
 
   # Password reset form
   ########################################
-  remove_file 'app/views/devise/passwords/edit.html.erb'
-  file 'app/views/devise/passwords/edit.html.erb', <<~HTML
+  remove_file 'app/views/devise/passwords/new.html.erb'
+  file 'app/views/devise/passwords/new.html.erb', <<~HTML
     <div class="flex justify-center w-screen items-center h-screen flex-col">
       <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
         <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
