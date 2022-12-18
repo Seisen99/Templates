@@ -60,48 +60,68 @@ file 'app/views/shared/_flashes.html.erb', <<~HTML
   <% end %>
 HTML
 
-inject_into_file 'app/views/layouts/application.html.erb', after: '<body>' do
-  <<~HTML
-    <%= render "shared/flashes" %>
-    <%= render "shared/navbar" %>
-  HTML
-end
+# Application.html.erb
+########################################
+remove_file 'app/views/layouts/application.html.erb'
+file 'app/views/layouts/application.html.erb', <<~HTML
+  <!DOCTYPE html>
+  <html class="bg-gray-900">
+    <head>
+      <title>TemplateTest</title>
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <%= csrf_meta_tags %>
+      <%= csp_meta_tag %>
 
-inject_into_file 'app/views/layouts/application.html.erb', after: '<%= yield %>' do
-  <<~HTML
-    <%= render "shared/footer" %>
-  HTML
-end
+      <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+      <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+    </head>
 
+    <body class="h-screen flex flex-col min-h-screen">
+      <header>
+        <%= render "shared/navbar" %>
+      </header>
+      <main class="h-screen">
+        <%= yield %>
+        <%= render "shared/flashes" %>
+      </main>
+      <footer>
+        <%= render "shared/footer" %>
+      </footer>
+    </body>
+  </html>
+HTML
+
+# Navbar
+########################################
 file 'app/views/shared/_navbar.html.erb', <<~HTML
-  <nav class="dark:bg-gray-800 py-2 px-4 flex justify-between items-center">
+  <nav class="dark:bg-gray-800 py-2 px-4 md:flex md:items-center md:justify-between h-auto rounded-lg">
     <div class="flex items-center">
-      <%= link_to "Philsdu", root_path, class: "text-gray-200 font-bold text-xl tracking-tight hover:bg-gray-900" %>
+      <%= link_to "Philsdu", root_path, class: "text-gray-100 font-bold text-xl py-2 px-4 rounded-full focus:outline-none hover:bg-gray-900" %>
     </div>
     <div class="flex items-center">
-      <%= link_to "Home", root_path, class: "text-gray-200 font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-900" %>
-      <%= link_to "Hello", root_path, class: "text-gray-200 font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-900" %>
-      <%= link_to "Maybe", root_path, class: "text-gray-200 font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-900" %>
-      <%= link_to "Pouet", root_path, class: "text-gray-200 font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-900" %>
+      <%= link_to "Home", root_path, class: "text-gray-100 font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-900" %>
+      <%= link_to "Hello", root_path, class: "text-gray-100 font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-900" %>
+      <%= link_to "Maybe", root_path, class: "text-gray-100 font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-900" %>
+      <%= link_to "Pouet", root_path, class: "text-gray-100 font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-900" %>
 
-      <button data-controller="navbar-dropdown" data-action="click->navbar-dropdown#toggle" class="text-gray-200 font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-900" type="button">Dropdown button<!-- Dropdown menu -->
-        <div data-navbar-dropdown-target="dropdown" data-action="mouseover->navbar-dropdown#openDropdown mouseout->navbar-dropdown#closeDropdown" class="absolute hidden z-10 w-44 bg-gray-700 rounded divide-y divide-gray-100 shadow text-gray-200">
-            <ul class="py-1 text-sm text-gray-200 dark:text-gray-200" aria-labelledby="dropdownDefault">
+      <button data-controller="navbar-dropdown" data-action="click->navbar-dropdown#toggle" class="flex items-start text-gray-100 font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-900 flex-col" type="button">Dropdown button<!-- Dropdown menu -->
+        <div data-navbar-dropdown-target="dropdown" data-action="mouseover->navbar-dropdown#openDropdown mouseout->navbar-dropdown#closeDropdown" class="bg-opacity-70 absolute hidden w-40 bg-gray-700 rounded  divide-gray-100 shadow text-gray-100">
+            <ul class="py-1 text-sm text-gray-100 dark:text-gray-100">
               <li>
                 <% if user_signed_in? %>
-                  <%= link_to "Sign out", destroy_user_session_path,  data: {turbo_method: :delete}, class: "block py-2 px-4 hover:bg-gray-900 dark:hover:bg-gray-600 dark:hover:text-gray-200" %>
+                  <%= link_to "Sign out", destroy_user_session_path,  data: {turbo_method: :delete}, class: "block py-2 px-1 hover:bg-gray-900 dark:hover:bg-gray-600 dark:hover:text-gray-100" %>
                 <% else %>
-                  <%= link_to "Sign In", new_user_session_path, class: "block py-2 px-4  hover:bg-gray-900 dark:hover:bg-gray-600 dark:hover:text-gray-200" %>
+                  <%= link_to "Sign In", new_user_session_path, class: "block py-2 px-1  hover:bg-gray-900 dark:hover:bg-gray-600 dark:hover:text-gray-100" %>
                 <% end %>
               </li>
               <li>
-                <a href="#" class="block py-2 px-4  hover:bg-gray-900 dark:hover:bg-gray-600 dark:hover:text-gray-200">Account</a>
+                <a href="#" class="block py-2 px-1  hover:bg-gray-900 dark:hover:bg-gray-600 dark:hover:text-gray-100">Account</a>
               </li>
               <li>
-                <a href="#" class="block py-2 px-4  hover:bg-gray-900 dark:hover:bg-gray-600 dark:hover:text-gray-200">Terms of use</a>
+                <a href="#" class="block py-2 px-1  hover:bg-gray-900 dark:hover:bg-gray-600 dark:hover:text-gray-100">Terms of use</a>
               </li>
               <li>
-                <a href="#" class="block py-2 px-4  hover:bg-gray-900 dark:hover:bg-gray-600 dark:hover:text-gray-200">Something</a>
+                <a href="#" class="block py-2 px-1  hover:bg-gray-900 dark:hover:bg-gray-600 dark:hover:text-gray-100">Something</a>
               </li>
             </ul>
         </div>
@@ -109,12 +129,6 @@ file 'app/views/shared/_navbar.html.erb', <<~HTML
     </div>
   </nav>
 HTML
-
-gsub_file(
-  'app/views/layouts/application.html.erb',
-  '<html>',
-  '<html class="bg-gray-900">'
-)
 
 # Generators
 ########################################
@@ -175,69 +189,144 @@ after_bundle do
   generate('devise:views')
   # better forms
   #######################################
+
+  # Sign up form
+  ########################################
   remove_file 'app/views/devise/registrations/new.html.erb'
   file 'app/views/devise/registrations/new.html.erb', <<~HTML
-      <div class="flex justify-center items-center flex-col">
-      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), data: { turbo: :false }, class: "bg-gray-800 py-4 px-6") do |f| %>
-        <h2 class="text-white font-bold text-center">Sign up</h2>
+    <div class="flex justify-center w-screen items-center h-screen flex-col">
+      <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+        <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+          <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">Sign up</h1>
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), data: { turbo: :false }, class: "space-y-4 md:space-y-6") do |f| %>
         <%= render "devise/shared/error_messages", resource: resource %>
-
-        <div class="field">
-          <%= f.label :email, class: "text-white font-bold" %><br />
-          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "bg-gray-700 py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800 text-white font-bold" %>
-        </div>
-
-        <div class="field">
-          <%= f.label :password, class: "text-white font-bold" %>
-          <% if @minimum_password_length %>
-          <em>(<%= @minimum_password_length %> characters minimum)</em>
-          <% end %><br />
-          <%= f.password_field :password, autocomplete: "new-password", class: "bg-gray-700 py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800 text-white font-bold" %>
-        </div>
-
-        <div class="field">
-          <%= f.label :password_confirmation, class: "text-white font-bold" %><br />
-          <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "bg-gray-700 py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800 text-white font-bold" %>
-        </div>
-
-        <div class="actions">
-          <%= f.submit "Sign up", class: "text-white font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800" %>
-        </div>
-      <% end %>
-
-      <%= render "devise/shared/links" %>
-    </div>
-
-  HTML
-  remove_file 'app/views/devise/sessions/new.html.erb'
-  file 'app/views/devise/sessions/new.html.erb', <<~HTML
-      <div class="flex justify-center items-center flex-col">
-      <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: { turbo: :false }, class: "bg-gray-800 py-4 px-6") do |f| %>
-        <h2 class="text-white font-bold text-center">Log in</h2>
-        <div class="field">
-          <%= f.label :email, class: "text-white font-bold" %><br />
-          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "bg-gray-700 py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800 text-white font-bold" %>
-        </div>
-
-        <div class="field">
-          <%= f.label :password, class: "text-white font-bold" %><br />
-          <%= f.password_field :password, autocomplete: "current-password", class: "bg-gray-700 py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800 text-white font-bold" %>
-        </div>
-
-        <% if devise_mapping.rememberable? %>
-          <div class="field">
-            <%= f.check_box :remember_me, class: "text-white font-bold" %>
-            <%= f.label :remember_me, class: "text-white font-bold" %>
+          <div class="mt-5">
+            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", id: "email", class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" %>
           </div>
+
+          <div class="mt-5">
+            <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
+            <%= f.password_field :password, autocomplete: "new-password", id: "password", class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" %>
+            <% if @minimum_password_length %>
+            <% end %>
+          </div>
+
+          <div class="mt-5">
+            <label for="password_confirmation" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm your password</label>
+            <%= f.password_field :password_confirmation, autocomplete: "new-password", id: "password_confirmation", class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700" %>
+
+          <div class="actions">
+            <%= f.submit "Sign up", class: "mt-7 cursor-pointer w-full py-3 px-6 bg-gray-600 text-base font-medium rounded-lg text-white shadow-md hover:bg-gray-500" %>
+          </div>
+
         <% end %>
 
-        <div class="actions">
-          <%= f.submit "Log in", class: "text-white font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800" %>
+        <div class="flex items-center justify-between mt-5">
+          <p class="text-sm font-light text-gray-500 dark:text-gray-400">Already have an account? <%= link_to "Sign in", new_session_path(resource_name), class: "font-medium text-gray-300 hover:underline cursor-pointer" %></p>
+        </div>
+      </div>
+    </div>
+  HTML
+
+  # Sign in form
+  ########################################
+  remove_file 'app/views/devise/sessions/new.html.erb'
+  file 'app/views/devise/sessions/new.html.erb', <<~HTML
+    <div class="flex justify-center w-screen items-center h-screen flex-col">
+      <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+        <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+          <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">Sign in to your account</h1>
+
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: { turbo: :false }, class: "space-y-4 md:space-y-6") do |f| %>
+
+          <div class="mt-5">
+            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", id: "email", class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" %>
+          </div>
+
+          <div class="mt-5">
+            <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
+            <%= f.password_field :password, autocomplete: "current-password", id: "password", class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" %>
+          </div>
+
+          <% if devise_mapping.rememberable? %>
+
+          <div class="flex items-center">
+            <%= f.check_box :remember_me, id: "remember-me", class: "mt-1" %>
+            <label for="remember-me" class="ml-1 mt-1 text-sm font-medium text-gray-900 dark:text-white">
+            <%= f.label :remember_me, class: "ml-2 text-sm font-medium text-gray-900 dark:text-white" %>
+
+          </div>
+
+          <% end %>
+
+          <div class="flex items-center justify-between mt-5">
+              <%= f.submit "Sign in", class: "cursor-pointer w-full py-3 px-6 bg-gray-600 text-base font-medium rounded-lg text-white shadow-md hover:bg-gray-500" %>
+          </div>
+
+          <div class="flex items-center justify-between mt-5">
+            <%= link_to "Forgot your password?", new_password_path(resource_name), class:"cursor-pointer text-indigo-400 hover:text-indigo-200 text-sm font-medium" %>
+            <p class="text-sm font-light text-gray-500 dark:text-gray-400">Don't have an account yet? <%= link_to "Sign up", new_registration_path(resource_name), class: "font-medium text-gray-300 hover:underline cursor-pointer" %></p>
+          </div>
+
+        <% end %>
+
+        </div>
+      </div>
+    </div>
+  HTML
+
+  # Password reset form
+  ########################################
+  remove_file 'app/views/devise/passwords/edit.html.erb'
+  file 'app/views/devise/passwords/edit.html.erb', <<~HTML
+    <div class="flex justify-center w-screen items-center h-screen flex-col">
+      <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+        <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+          <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">Forgot your password?</h1>
+          <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }, data: { turbo: :false }, class: "space-y-4 md:space-y-6") do |f| %>
+            <%= render "devise/shared/error_messages", resource: resource %>
+            <div class="mt-5">
+              <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+              <%= f.email_field :email, autofocus: true, autocomplete: "email", id: "email", class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" %>
+            </div>
+
+            <div class="actions">
+              <%= f.submit "Send me reset password instructions", class: "mt-7 cursor-pointer w-full py-3 px-6 bg-gray-600 text-base font-medium rounded-lg text-white shadow-md hover:bg-gray-500" %>
+            </div>
+
+          <% end %>
+
+          <div class="flex items-center justify-between mt-5">
+            <%= link_to "Sign in", new_session_path(resource_name), class: "cursor-pointer py-3 px-6 bg-gray-600 text-base font-medium rounded-lg text-white shadow-md hover:bg-gray-500" %>
+            <%= link_to "Sign up", new_registration_path(resource_name), class: "cursor-pointer py-3 px-6 bg-gray-600 text-base font-medium rounded-lg text-white shadow-md hover:bg-gray-500" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  HTML
+
+  # Errors partial
+  ########################################
+  remove_file 'app/views/devise/shared/_error_messages.html.erb'
+  file 'app/views/devise/shared/_error_messages.html.erb', <<~HTML
+    <div class="text-gray-200">
+      <% if resource.errors.any? %>
+        <div id="error_explanation">
+          <h2>
+            <%= I18n.t("errors.messages.not_saved",
+                      count: resource.errors.count,
+                      resource: resource.class.model_name.human.downcase)
+            %>
+          </h2>
+          <ul>
+            <% resource.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
         </div>
       <% end %>
-      <div class="field">
-      </div>
-        <%= render "devise/shared/links" %>
     </div>
   HTML
 
@@ -264,12 +353,14 @@ after_bundle do
     end
   RUBY
 
+  # Home page view
+  ########################################
   remove_file 'app/views/pages/home.html.erb'
   file 'app/views/pages/home.html.erb', <<~HTML
     <div class="flex justify-center w-screen items-center h-screen">
       <h1 id="pages-list" data-controller="pages-list">
         <div>
-            <h1 id="pages-list" data-pages-list-target="textElement" class="text-element text-6xl pb-7 pl-4 text-indigo-500">Hello! Welcome to your new rails project!</h1>
+            <h1 id="pages-list" data-pages-list-target="textElement" class="text-element text-6xl pb-7 pl-4 text-indigo-400">Hello! Welcome to your new rails project!</h1>
             <p class="text-gray-300  text-2xl mt-4 p-4 text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">In this app you can use TailwindCSS and the Anime.js lib for your front-end.</p>
             <p class="text-gray-300  text-2xl p-4 text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">You can also use StimulusJS or install React with the "yarn add react react-dom" command.</p>
             <p class="text-4xl p-4 font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">The Devise gem for User authentification is already setup. Have fun!</p>
@@ -278,25 +369,26 @@ after_bundle do
     </div>
   HTML
 
+  # Footer partial
+  ########################################
   file 'app/views/shared/_footer.html.erb', <<~HTML
-  <footer class="p-4 bg-white rounded-lg shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-800">
-  <span class="text-sm text-gray-400 sm:text-center dark:text-gray-300">© 2022 <a href="https://seisen99.github.io/profile/" class="hover:underline">Philou™</a>. All Rights Reserved.
-  </span>
-  <ul class="flex flex-wrap items-center mt-3 text-sm text-gray-400 dark:text-gray-300 sm:mt-0">
-      <li>
-          <a href="#" class="mr-4 hover:underline md:mr-6 ">About</a>
-      </li>
-      <li>
-          <a href="#" class="mr-4 hover:underline md:mr-6">Privacy Policy</a>
-      </li>
-      <li>
-          <a href="#" class="mr-4 hover:underline md:mr-6">Licensing</a>
-      </li>
-      <li>
-          <a href="https://seisen99.github.io/landing/" class="hover:underline">Contact</a>
-      </li>
-  </ul>
-  </footer>
+    <footer class="p-4 rounded-lg shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-800">
+      <span class="text-sm text-gray-400 sm:text-center dark:text-gray-300">© 2022 <a href="https://seisen99.github.io/profile/" target="/blank" class="hover:underline">Philou™</a> 🚀</span>
+        <ul class="flex flex-wrap items-center mt-3 text-sm text-gray-400 dark:text-gray-300 sm:mt-0">
+          <li>
+              <a href="#" class="mr-4 hover:underline md:mr-6 ">About</a>
+          </li>
+          <li>
+              <a href="#" class="mr-4 hover:underline md:mr-6">Privacy Policy</a>
+          </li>
+          <li>
+              <a href="#" class="mr-4 hover:underline md:mr-6">Licensing</a>
+          </li>
+          <li>
+              <a href="https://seisen99.github.io/landing/" target="/blank" class="hover:underline">Contact</a>
+          </li>
+        </ul>
+    </footer>
   HTML
 
   run 'npm install animejs --save'
