@@ -73,10 +73,10 @@ file 'app/views/shared/_navbar.html.erb', <<~HTML
       <%= link_to "My site", root_path, class: "text-white font-bold text-xl tracking-tight hover:bg-gray-800" %>
     </div>
     <div class="flex items-center">
-      <%= link_to "All Articles", articles_path, class: "text-white font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800" %>
-      <%= link_to "All Articles", articles_path, class: "text-white font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800" %>
-      <%= link_to "All Articles", articles_path, class: "text-white font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800" %>
-      <%= link_to "All Articles", articles_path, class: "text-white font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800" %>
+      <%= link_to "Home", root_path, class: "text-white font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800" %>
+      <%= link_to "About", root_path, class: "text-white font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800" %>
+      <%= link_to "Contact", root_path, class: "text-white font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800" %>
+      <%= link_to "Pouet", root_path, class: "text-white font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800" %>
 
       <button data-controller="navbar-dropdown" data-action="click->navbar-dropdown#toggle" class="text-white font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800" type="button">Dropdown button<!-- Dropdown menu -->
         <div data-navbar-dropdown-target="dropdown" data-action="mouseover->navbar-dropdown#openDropdown mouseout->navbar-dropdown#closeDropdown" class="absolute hidden z-10 w-44 bg-gray-700 rounded divide-y divide-gray-100 shadow text-white">
