@@ -17,8 +17,6 @@ inject_into_file 'Gemfile', after: 'gem "debug", platforms: %i[ mri mingw x64_mi
   RUBY
 end
 
-gsub_file('Gemfile', '# gem "sassc-rails"', 'gem "sassc-rails"')
-
 # Flashes
 ########################################
 file 'app/views/shared/_flashes.html.erb', <<~HTML
@@ -69,51 +67,39 @@ inject_into_file 'app/views/layouts/application.html.erb', after: '<body>' do
   HTML
 end
 
-inject_into_file 'app/views/layouts/application.html.erb', before: '</head>' do
-  <<~HTML
-    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.5/dist/flowbite.min.css" />
-  HTML
-end
-
-inject_into_file 'app/views/layouts/application.html.erb', after: '</html>' do
-  <<~HTML
-    <script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></script>
-  HTML
-end
-
 file 'app/views/shared/_navbar.html.erb', <<~HTML
   <nav class="bg-gray-700 py-2 px-4 flex justify-between items-center">
     <div class="flex items-center">
-    <%= link_to "My site", root_path, class: "text-white font-bold text-xl tracking-tight hover:bg-gray-800" %>
+      <%= link_to "My site", root_path, class: "text-white font-bold text-xl tracking-tight hover:bg-gray-800" %>
     </div>
     <div class="flex items-center">
-      <button class="text-white font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800">Button 1</button>
-      <button class="text-white font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800 ml-4">Button 2</button>
-      <button class="text-white font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800 ml-4">Button 3</button>
-      <button class="text-white font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800 ml-4">Button 4</button>
+      <%= link_to "All Articles", articles_path, class: "text-white font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800" %>
+      <%= link_to "All Articles", articles_path, class: "text-white font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800" %>
+      <%= link_to "All Articles", articles_path, class: "text-white font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800" %>
+      <%= link_to "All Articles", articles_path, class: "text-white font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800" %>
 
-  <button id="dropdownDefault" data-dropdown-toggle="dropdown" class="text-white font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800" type="button">Dropdown button</button>
-  <!-- Dropdown menu -->
-  <div id="dropdown" class="hidden z-10 w-44 bg-gray-700 rounded divide-y divide-gray-100 shadow text-white">
-      <ul class="py-1 text-sm text-white dark:text-gray-200" aria-labelledby="dropdownDefault">
-        <li>
-          <% if user_signed_in? %>
-            <%= link_to "Sign out", destroy_user_session_path,  data: {turbo_method: :delete}, class: "block py-2 px-4 hover:bg-gray-800 dark:hover:bg-gray-600 dark:hover:text-white" %>
-          <% else %>
-            <%= link_to "Sign In", new_user_session_path, class: "block py-2 px-4  hover:bg-gray-800 dark:hover:bg-gray-600 dark:hover:text-white" %>
-          <% end %>
-        </li>
-        <li>
-          <a href="#" class="block py-2 px-4  hover:bg-gray-800 dark:hover:bg-gray-600 dark:hover:text-white">Button 1</a>
-        </li>
-        <li>
-          <a href="#" class="block py-2 px-4  hover:bg-gray-800 dark:hover:bg-gray-600 dark:hover:text-white">Button 2</a>
-        </li>
-        <li>
-          <a href="#" class="block py-2 px-4  hover:bg-gray-800 dark:hover:bg-gray-600 dark:hover:text-white">Button 3</a>
-        </li>
-      </ul>
-  </div>
+      <button data-controller="navbar-dropdown" data-action="click->navbar-dropdown#toggle" class="text-white font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800" type="button">Dropdown button<!-- Dropdown menu -->
+        <div data-navbar-dropdown-target="dropdown" data-action="mouseover->navbar-dropdown#openDropdown mouseout->navbar-dropdown#closeDropdown" class="absolute hidden z-10 w-44 bg-gray-700 rounded divide-y divide-gray-100 shadow text-white">
+            <ul class="py-1 text-sm text-white dark:text-gray-200" aria-labelledby="dropdownDefault">
+              <li>
+                <% if user_signed_in? %>
+                  <%= link_to "Sign out", destroy_user_session_path,  data: {turbo_method: :delete}, class: "block py-2 px-4 hover:bg-gray-800 dark:hover:bg-gray-600 dark:hover:text-white" %>
+                <% else %>
+                  <%= link_to "Sign In", new_user_session_path, class: "block py-2 px-4  hover:bg-gray-800 dark:hover:bg-gray-600 dark:hover:text-white" %>
+                <% end %>
+              </li>
+              <li>
+                <a href="#" class="block py-2 px-4  hover:bg-gray-800 dark:hover:bg-gray-600 dark:hover:text-white">Button 1</a>
+              </li>
+              <li>
+                <a href="#" class="block py-2 px-4  hover:bg-gray-800 dark:hover:bg-gray-600 dark:hover:text-white">Button 2</a>
+              </li>
+              <li>
+                <a href="#" class="block py-2 px-4  hover:bg-gray-800 dark:hover:bg-gray-600 dark:hover:text-white">Button 3</a>
+              </li>
+            </ul>
+        </div>
+      </button>
     </div>
   </nav>
 HTML
@@ -274,93 +260,112 @@ after_bundle do
 
   remove_file 'app/views/pages/home.html.erb'
   file 'app/views/pages/home.html.erb', <<~HTML
-  <div class="flex justify-center w-screen items-center h-screen">
-  <h1 id="pages-list" data-controller="pages-list">
-    <div>
-        <h1  data-aos="zoom-in" data-aos-duration="10000" data-aos-easing="linear" id="pages-list" data-pages-list-target="textElement" class="text-element text-6xl pb-7 pl-4 text-sky-500">Hello! Welcome to your new rails project!</h1>
-        <p data-aos="fade-right"
-           data-aos-offset="300"
-           data-aos-easing="ease-in-sine"
-           class="text-gray-300  text-2xl mt-4 p-4">
-           In this app you can use TailwindCSS, Anime.js and AOS.js🥳!
-        </p>
-        <p data-aos="fade-left"
-           data-aos-offset="300"
-           data-aos-easing="ease-in-sine"
-           class="text-gray-300  text-2xl p-4">You can also use StimulusJS, TurboRails and Devise is setup too 🤯.</p>
-        <p class="text-4xl p-4 font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-pink-400 to-red-600">Have fun!</p>
+    <div class="flex justify-center w-screen items-center h-screen">
+      <h1 id="pages-list" data-controller="pages-list">
+        <div>
+            <h1  data-aos="zoom-in" data-aos-duration="10000" data-aos-easing="linear" id="pages-list" data-pages-list-target="textElement" class="text-element text-6xl pb-7 pl-4 text-sky-500">Hello! Welcome to your new rails project!</h1>
+            <p data-aos="fade-right"
+              data-aos-offset="300"
+              data-aos-easing="ease-in-sine"
+              class="text-gray-300  text-2xl mt-4 p-4">
+              In this app you can use TailwindCSS, Anime.js and AOS.js🥳!
+            </p>
+            <p data-aos="fade-left"
+              data-aos-offset="300"
+              data-aos-easing="ease-in-sine"
+              class="text-gray-300  text-2xl p-4">You can also use StimulusJS, TurboRails and Devise is setup too 🤯.</p>
+            <p class="text-4xl p-4 font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-pink-400 to-red-600">Have fun!</p>
+        </div>
+      </h1>
     </div>
-  </h1>
-</div>
   HTML
 
   run 'npm install animejs --save'
-  run 'npm install --save aos@next'
 
   file 'app/javascript/controllers/pages_list_controller.js', <<~JS
-        import { Controller } from "@hotwired/stimulus"
-        import anime from 'animejs/lib/anime.es.js';
-        import AOS from 'aos';
-        import 'aos/dist/aos.css'; // You can also use <link> for styles
-    // ..
-        AOS.init();
+    import { Controller } from "@hotwired/stimulus"
+    import anime from 'animejs/lib/anime.es.js';
 
-        export default class extends Controller {
-          static targets = ['textElement'];
+    export default class extends Controller {
+      static targets = ['textElement'];
 
-          connect() {
-            // Select the text element that you want to animate
-            const textElement = this.textElementTarget;
+      connect() {
+        // Select the text element that you want to animate
+        const textElement = this.textElementTarget;
 
-            // Split the text into separate letters
-            const letters = textElement.textContent.split('');
+        // Split the text into separate letters
+        const letters = textElement.textContent.split('');
 
-            // Empty the text element
-            textElement.textContent = '';
+        // Empty the text element
+        textElement.textContent = '';
 
-            // Add each letter as a separate element
-            letters.forEach((letter, index) => {
-              // If the current letter is a space, add a space element
-              if (letter === ' ') {
-                const spaceElement = document.createElement('span');
-                spaceElement.innerHTML = '&nbsp;';
-                spaceElement.style.display = 'inline-block';
-                textElement.appendChild(spaceElement);
-              } else {
-                const letterElement = document.createElement('span');
-                letterElement.textContent = letter;
-                letterElement.style.display = 'inline-block';
-                textElement.appendChild(letterElement);
+        // Add each letter as a separate element
+        letters.forEach((letter, index) => {
+          // If the current letter is a space, add a space element
+          if (letter === ' ') {
+            const spaceElement = document.createElement('span');
+            spaceElement.innerHTML = '&nbsp;';
+            spaceElement.style.display = 'inline-block';
+            textElement.appendChild(spaceElement);
+          } else {
+            const letterElement = document.createElement('span');
+            letterElement.textContent = letter;
+            letterElement.style.display = 'inline-block';
+            textElement.appendChild(letterElement);
 
-                // Set the initial position of each letter to be off the screen at the top
+            // Set the initial position of each letter to be off the screen at the top
 
 
 
-                // Add a mouseover event listener to each letter element
-                letterElement.addEventListener('mouseover', () => {
-                  // Use the Anime.js animate() method to animate the letter element
-                  anime({
-                    targets: letterElement,
-                    scale: [1, 1.5],  // zoom in by 50%
-                    duration: 500,  // animate over 500 milliseconds
+            // Add a mouseover event listener to each letter element
+            letterElement.addEventListener('mouseover', () => {
+              // Use the Anime.js animate() method to animate the letter element
+              anime({
+                targets: letterElement,
+                scale: [1, 1.5],  // zoom in by 50%
+                duration: 500,  // animate over 500 milliseconds
 
-                  });
-                });
+              });
+            });
 
-                // Add a mouseout event listener to each letter element
-                letterElement.addEventListener('mouseout', () => {
-                  // Use the Anime.js animate() method to animate the letter element back to its original size
-                  anime({
-                    targets: letterElement,
-                    scale: [1, 1.4, 1, 1.25, 1, 1.15, 1],
-                    easing: 'easeInOutSine',
-                    duration: 1000,
-                  });
-                });
-              }
+            // Add a mouseout event listener to each letter element
+            letterElement.addEventListener('mouseout', () => {
+              // Use the Anime.js animate() method to animate the letter element back to its original size
+              anime({
+                targets: letterElement,
+                scale: [1, 1.4, 1, 1.25, 1, 1.15, 1],
+                easing: 'easeInOutSine',
+                duration: 1000,
+              });
             });
           }
-        }
+        });
+      }
+    }
+  JS
+
+  file 'app/javascript/controllers/navbar_dropdown_controller.js', <<~JS
+    import { Controller } from "@hotwired/stimulus"
+
+    // Connects to data-controller="navbar-dropdown"
+    export default class extends Controller {
+      static targets = [ "dropdown" ]
+      connect() {
+        console.log("NavbarDropdownController connected")
+      }
+
+      toggle() {
+        this.dropdownTarget.classList.toggle("hidden")
+      }
+
+      openDropdown() {
+        this.dropdownTarget.classList.remove("hidden")
+      }
+
+      closeDropdown() {
+        this.dropdownTarget.classList.add("hidden")
+      }
+    }
   JS
 
   remove_file 'app/javascript/controllers/index.js'
@@ -372,6 +377,9 @@ after_bundle do
 
     import PagesListController from "./pages_list_controller"
     application.register("pages-list", PagesListController)
+
+    import NavbarDropdownController from "./navbar_dropdown_controller"
+    application.register("navbar-dropdown", NavbarDropdownController)
   JS
 
   remove_file 'app/javascript/application.js'
@@ -379,10 +387,6 @@ after_bundle do
       // Entry point for the build script in your package.json
     import "@hotwired/turbo-rails"
     import "./controllers"
-    import AOS from 'aos';
-    import 'aos/dist/aos.css'; // You can also use <link> for styles
-    // ..
-    AOS.init();
   JS
 
   # Environments
