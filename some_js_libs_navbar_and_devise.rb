@@ -74,34 +74,34 @@ inject_into_file 'app/views/layouts/application.html.erb', after: '<%= yield %>'
 end
 
 file 'app/views/shared/_navbar.html.erb', <<~HTML
-  <nav class="bg-gray-800 py-2 px-4 flex justify-between items-center">
+  <nav class="dark:bg-gray-800 py-2 px-4 flex justify-between items-center">
     <div class="flex items-center">
-      <%= link_to "Philsdu", root_path, class: "text-gray-200 font-bold text-xl tracking-tight hover:bg-gray-800" %>
+      <%= link_to "Philsdu", root_path, class: "text-gray-200 font-bold text-xl tracking-tight hover:bg-gray-900" %>
     </div>
     <div class="flex items-center">
-      <%= link_to "Home", root_path, class: "text-gray-200 font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800" %>
-      <%= link_to "Hello", root_path, class: "text-gray-200 font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800" %>
-      <%= link_to "Maybe", root_path, class: "text-gray-200 font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800" %>
-      <%= link_to "Pouet", root_path, class: "text-gray-200 font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800" %>
+      <%= link_to "Home", root_path, class: "text-gray-200 font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-900" %>
+      <%= link_to "Hello", root_path, class: "text-gray-200 font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-900" %>
+      <%= link_to "Maybe", root_path, class: "text-gray-200 font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-900" %>
+      <%= link_to "Pouet", root_path, class: "text-gray-200 font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-900" %>
 
-      <button data-controller="navbar-dropdown" data-action="click->navbar-dropdown#toggle" class="text-gray-200 font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-800" type="button">Dropdown button<!-- Dropdown menu -->
+      <button data-controller="navbar-dropdown" data-action="click->navbar-dropdown#toggle" class="text-gray-200 font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-900" type="button">Dropdown button<!-- Dropdown menu -->
         <div data-navbar-dropdown-target="dropdown" data-action="mouseover->navbar-dropdown#openDropdown mouseout->navbar-dropdown#closeDropdown" class="absolute hidden z-10 w-44 bg-gray-700 rounded divide-y divide-gray-100 shadow text-gray-200">
             <ul class="py-1 text-sm text-gray-200 dark:text-gray-200" aria-labelledby="dropdownDefault">
               <li>
                 <% if user_signed_in? %>
-                  <%= link_to "Sign out", destroy_user_session_path,  data: {turbo_method: :delete}, class: "block py-2 px-4 hover:bg-gray-800 dark:hover:bg-gray-600 dark:hover:text-gray-200" %>
+                  <%= link_to "Sign out", destroy_user_session_path,  data: {turbo_method: :delete}, class: "block py-2 px-4 hover:bg-gray-900 dark:hover:bg-gray-600 dark:hover:text-gray-200" %>
                 <% else %>
-                  <%= link_to "Sign In", new_user_session_path, class: "block py-2 px-4  hover:bg-gray-800 dark:hover:bg-gray-600 dark:hover:text-gray-200" %>
+                  <%= link_to "Sign In", new_user_session_path, class: "block py-2 px-4  hover:bg-gray-900 dark:hover:bg-gray-600 dark:hover:text-gray-200" %>
                 <% end %>
               </li>
               <li>
-                <a href="#" class="block py-2 px-4  hover:bg-gray-800 dark:hover:bg-gray-600 dark:hover:text-gray-200">Account</a>
+                <a href="#" class="block py-2 px-4  hover:bg-gray-900 dark:hover:bg-gray-600 dark:hover:text-gray-200">Account</a>
               </li>
               <li>
-                <a href="#" class="block py-2 px-4  hover:bg-gray-800 dark:hover:bg-gray-600 dark:hover:text-gray-200">Terms of use</a>
+                <a href="#" class="block py-2 px-4  hover:bg-gray-900 dark:hover:bg-gray-600 dark:hover:text-gray-200">Terms of use</a>
               </li>
               <li>
-                <a href="#" class="block py-2 px-4  hover:bg-gray-800 dark:hover:bg-gray-600 dark:hover:text-gray-200">Something</a>
+                <a href="#" class="block py-2 px-4  hover:bg-gray-900 dark:hover:bg-gray-600 dark:hover:text-gray-200">Something</a>
               </li>
             </ul>
         </div>
