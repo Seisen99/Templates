@@ -67,8 +67,14 @@ inject_into_file 'app/views/layouts/application.html.erb', after: '<body>' do
   HTML
 end
 
+inject_into_file 'app/views/layouts/application.html.erb', after: '<%= yield %>' do
+  <<~HTML
+    <%= render "shared/footer" %>
+  HTML
+end
+
 file 'app/views/shared/_navbar.html.erb', <<~HTML
-  <nav class="bg-gray-700 py-2 px-4 flex justify-between items-center">
+  <nav class="bg-gray-800 py-2 px-4 flex justify-between items-center">
     <div class="flex items-center">
       <%= link_to "My site", root_path, class: "text-white font-bold text-xl tracking-tight hover:bg-gray-800" %>
     </div>
@@ -107,7 +113,7 @@ HTML
 gsub_file(
   'app/views/layouts/application.html.erb',
   '<html>',
-  '<html class="bg-gray-800">'
+  '<html class="bg-gray-900">'
 )
 
 # Generators
@@ -263,21 +269,34 @@ after_bundle do
     <div class="flex justify-center w-screen items-center h-screen">
       <h1 id="pages-list" data-controller="pages-list">
         <div>
-            <h1  data-aos="zoom-in" data-aos-duration="10000" data-aos-easing="linear" id="pages-list" data-pages-list-target="textElement" class="text-element text-6xl pb-7 pl-4 text-sky-500">Hello! Welcome to your new rails project!</h1>
-            <p data-aos="fade-right"
-              data-aos-offset="300"
-              data-aos-easing="ease-in-sine"
-              class="text-gray-300  text-2xl mt-4 p-4">
-              In this app you can use TailwindCSS, Anime.js and AOS.js🥳!
-            </p>
-            <p data-aos="fade-left"
-              data-aos-offset="300"
-              data-aos-easing="ease-in-sine"
-              class="text-gray-300  text-2xl p-4">You can also use StimulusJS, TurboRails and Devise is setup too 🤯.</p>
-            <p class="text-4xl p-4 font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-pink-400 to-red-600">Have fun!</p>
+            <h1 id="pages-list" data-pages-list-target="textElement" class="text-element text-6xl pb-7 pl-4 text-indigo-500">Hello! Welcome to your new rails project!</h1>
+            <p class="text-gray-300  text-2xl mt-4 p-4 text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">In this app you can use TailwindCSS and Anime.js🥳!</p>
+            <p class="text-gray-300  text-2xl p-4 text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">You can also use StimulusJS, TurboRails and Devise is setup too 🤯.</p>
+            <p class="text-4xl p-4 font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">Have fun!</p>
         </div>
       </h1>
     </div>
+  HTML
+
+  file 'app/views/shared/_footer.html.erb', <<~HTML
+  <footer class="p-4 bg-white rounded-lg shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-800">
+  <span class="text-sm text-gray-400 sm:text-center dark:text-gray-300">© 2022 <a href="https://seisen99.github.io/profile/" class="hover:underline">Philou™</a>. All Rights Reserved.
+  </span>
+  <ul class="flex flex-wrap items-center mt-3 text-sm text-gray-400 dark:text-gray-300 sm:mt-0">
+      <li>
+          <a href="#" class="mr-4 hover:underline md:mr-6 ">About</a>
+      </li>
+      <li>
+          <a href="#" class="mr-4 hover:underline md:mr-6">Privacy Policy</a>
+      </li>
+      <li>
+          <a href="#" class="mr-4 hover:underline md:mr-6">Licensing</a>
+      </li>
+      <li>
+          <a href="https://seisen99.github.io/landing/" class="hover:underline">Contact</a>
+      </li>
+  </ul>
+  </footer>
   HTML
 
   run 'npm install animejs --save'
