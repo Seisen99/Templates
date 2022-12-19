@@ -214,7 +214,7 @@ after_bundle do
 
           <div class="mt-5">
             <label for="password_confirmation" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm your password</label>
-            <%= f.password_field :password_confirmation, autocomplete: "new-password", id: "password_confirmation", class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700" %>
+            <%= f.password_field :password_confirmation, autocomplete: "new-password", id: "password_confirmation", class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" %>
 
           <div class="actions">
             <%= f.submit "Sign up", class: "mt-7 cursor-pointer w-full py-3 px-6 bg-gray-600 text-base font-medium rounded-lg text-white shadow-md hover:bg-gray-500" %>
