@@ -98,7 +98,7 @@ file 'app/views/shared/_navbar.html.erb', <<~HTML
     <div class="flex items-center">
       <%= link_to "Philsdu", root_path, class: "text-gray-100 font-bold text-xl py-2 px-4 rounded-full focus:outline-none hover:bg-gray-900" %>
     </div>
-    <div class="flex items-center md:flex md:items-center md:justify-between h-auto">
+    <div class="flex justify-center items-center md:flex md:items-center md:justify-between h-auto">
       <%= link_to "Home", root_path, class: "text-gray-100 font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-900" %>
       <%= link_to "Hello", root_path, class: "text-gray-100 font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-900" %>
       <%= link_to "Maybe", root_path, class: "text-gray-100 font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-900" %>
