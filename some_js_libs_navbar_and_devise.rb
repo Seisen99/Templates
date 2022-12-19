@@ -71,7 +71,7 @@ file 'app/views/layouts/application.html.erb', <<~HTML
       <meta name="viewport" content="width=device-width,initial-scale=1">
       <%= csrf_meta_tags %>
       <%= csp_meta_tag %>
-
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
       <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
       <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
     </head>
@@ -94,7 +94,7 @@ HTML
 # Navbar
 ########################################
 file 'app/views/shared/_navbar.html.erb', <<~HTML
-  <nav class="dark:bg-gray-800 py-2 px-4 md:flex md:items-center md:justify-between h-auto rounded-b-lg">
+  <nav data-controller="navbar-scroll" data-navbar-scroll-target="navbar" data-action="scroll@window->navbar-scroll#scroll" class="transition-opacity duration-500 ease-in-out fixed top-0 w-screen dark:bg-gray-800 py-2 px-4 md:flex md:items-center md:justify-between h-auto rounded-b-lg">
     <div class="flex items-center">
       <%= link_to "Philsdu", root_path, class: "text-gray-100 font-bold text-xl py-2 px-4 rounded-full focus:outline-none hover:bg-gray-900" %>
     </div>
@@ -104,8 +104,8 @@ file 'app/views/shared/_navbar.html.erb', <<~HTML
       <%= link_to "Maybe", root_path, class: "text-gray-100 font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-900" %>
       <%= link_to "Pouet", root_path, class: "text-gray-100 font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-900" %>
 
-      <button data-controller="navbar-dropdown" data-action="click->navbar-dropdown#toggle" class="flex items-start text-gray-100 font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-900 flex-col" type="button">Dropdown button<!-- Dropdown menu -->
-        <div data-navbar-dropdown-target="dropdown" data-action="mouseover->navbar-dropdown#openDropdown mouseout->navbar-dropdown#closeDropdown" class="right-5 top-16 bg-opacity-70 absolute hidden w-40 bg-gray-700 rounded  divide-gray-100 shadow text-gray-100">
+      <button data-controller="navbar-dropdown" data-action="click->navbar-dropdown#toggle" class=" text-gray-100 font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-900 flex-col" type="button"><i class="fa-solid fa-bars"></i><!-- Dropdown menu -->
+        <div data-navbar-dropdown-target="dropdown" data-action="mouseover->navbar-dropdown#openDropdown mouseout->navbar-dropdown#closeDropdown" class="transition ease-in-out delay-1000 right-2 top-16 bg-opacity-70 absolute hidden w-40 bg-gray-700 rounded  divide-gray-100 shadow text-gray-100">
             <ul class="py-1 text-sm text-gray-100 dark:text-gray-100">
               <li>
                 <% if user_signed_in? %>
@@ -387,7 +387,13 @@ after_bundle do
     </footer>
   HTML
 
+  #Install Anime.js
+  ########################################
+
   run 'npm install animejs --save'
+
+  # Controller for a cool animation with Anime.js on mouse hover in the home page
+  ########################################
 
   file 'app/javascript/controllers/pages_list_controller.js', <<~JS
     import { Controller } from "@hotwired/stimulus"
@@ -451,6 +457,8 @@ after_bundle do
     }
   JS
 
+  # Controller for the navbar dropdown
+  ########################################
   file 'app/javascript/controllers/navbar_dropdown_controller.js', <<~JS
     import { Controller } from "@hotwired/stimulus"
 
@@ -475,6 +483,31 @@ after_bundle do
     }
   JS
 
+  # Controller for the hide on scroll navbar
+  ########################################
+  file 'app/javascript/controllers/navbar_scroll_controller.js', <<~JS
+    import { Controller } from "@hotwired/stimulus"
+
+    // Connects to data-controller="navbar-scroll"
+    export default class extends Controller {
+      static targets = [ "navbar" ]
+
+      connect() {
+        console.log("NavbarScrollController connected");
+      }
+
+      scroll() {
+        this.navbarTarget.classList.add("opacity-0");
+        clearTimeout(this.scrollTimeout);
+        this.scrollTimeout = setTimeout(() => {
+          this.navbarTarget.classList.remove("opacity-0");
+        }, 250);
+      }
+    }
+  JS
+
+  # Add controllers too the index.js
+  ########################################
   remove_file 'app/javascript/controllers/index.js'
   file 'app/javascript/controllers/index.js', <<~JS
     import { application } from "./application"
@@ -487,8 +520,13 @@ after_bundle do
 
     import NavbarDropdownController from "./navbar_dropdown_controller"
     application.register("navbar-dropdown", NavbarDropdownController)
+
+    import NavbarScrollController from "./navbar_scroll_controller"
+    application.register("navbar-scroll", NavbarScrollController)
   JS
 
+  # Not sure if this is needed
+  ########################################
   remove_file 'app/javascript/application.js'
   file 'app/javascript/application.js', <<~JS
       // Entry point for the build script in your package.json
@@ -505,6 +543,7 @@ after_bundle do
   # Dotenv
   ########################################
   run "touch '.env'"
+
   # Git
   ########################################
   git :init
