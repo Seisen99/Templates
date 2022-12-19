@@ -94,7 +94,7 @@ HTML
 # Navbar
 ########################################
 file 'app/views/shared/_navbar.html.erb', <<~HTML
-  <nav class="dark:bg-gray-800 py-2 px-4 md:flex md:items-center md:justify-between h-auto rounded-lg">
+  <nav class="dark:bg-gray-800 py-2 px-4 md:flex md:items-center md:justify-between h-auto rounded-b-lg">
     <div class="flex items-center">
       <%= link_to "Philsdu", root_path, class: "text-gray-100 font-bold text-xl py-2 px-4 rounded-full focus:outline-none hover:bg-gray-900" %>
     </div>
@@ -368,7 +368,7 @@ after_bundle do
   # Footer partial
   ########################################
   file 'app/views/shared/_footer.html.erb', <<~HTML
-    <footer class="p-4 rounded-lg shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-800">
+    <footer class="p-4 rounded-t-lg shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-800">
       <span class="text-sm text-gray-400 sm:text-center dark:text-gray-300">© 2022 <a href="https://seisen99.github.io/profile/" target="/blank" class="hover:underline">Philou™</a> 🚀</span>
         <ul class="flex flex-wrap items-center mt-3 text-sm text-gray-400 dark:text-gray-300 sm:mt-0">
           <li>
