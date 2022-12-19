@@ -298,10 +298,6 @@ after_bundle do
 
           <% end %>
 
-          <div class="flex items-center justify-between mt-5">
-            <%= link_to "Sign in", new_session_path(resource_name), class: "cursor-pointer py-3 px-6 bg-gray-600 text-base font-medium rounded-lg text-white shadow-md hover:bg-gray-500" %>
-            <%= link_to "Sign up", new_registration_path(resource_name), class: "cursor-pointer py-3 px-6 bg-gray-600 text-base font-medium rounded-lg text-white shadow-md hover:bg-gray-500" %>
-          </div>
         </div>
       </div>
     </div>
