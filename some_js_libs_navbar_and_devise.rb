@@ -105,7 +105,7 @@ file 'app/views/shared/_navbar.html.erb', <<~HTML
       <%= link_to "Pouet", root_path, class: "text-gray-100 font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-900" %>
 
       <button data-controller="navbar-dropdown" data-action="click->navbar-dropdown#toggle" class="flex items-start text-gray-100 font-bold py-2 px-4 rounded-full focus:outline-none hover:bg-gray-900 flex-col" type="button">Dropdown button<!-- Dropdown menu -->
-        <div data-navbar-dropdown-target="dropdown" data-action="mouseover->navbar-dropdown#openDropdown mouseout->navbar-dropdown#closeDropdown" class="bg-opacity-70 absolute hidden w-40 bg-gray-700 rounded  divide-gray-100 shadow text-gray-100">
+        <div data-navbar-dropdown-target="dropdown" data-action="mouseover->navbar-dropdown#openDropdown mouseout->navbar-dropdown#closeDropdown" class="right-5 top-16 bg-opacity-70 absolute hidden w-40 bg-gray-700 rounded  divide-gray-100 shadow text-gray-100">
             <ul class="py-1 text-sm text-gray-100 dark:text-gray-100">
               <li>
                 <% if user_signed_in? %>
