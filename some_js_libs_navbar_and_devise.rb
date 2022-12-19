@@ -354,14 +354,14 @@ after_bundle do
   remove_file 'app/views/pages/home.html.erb'
   file 'app/views/pages/home.html.erb', <<~HTML
     <div class="flex justify-center w-screen items-center h-screen">
-      <h1 id="pages-list" data-controller="pages-list">
+      <div id="pages-list" data-controller="pages-list">
         <div>
             <h1 id="pages-list" data-pages-list-target="textElement" class="text-element text-6xl pb-7 pl-4 text-indigo-400">Hello! Welcome to your new rails project!</h1>
             <p class="text-gray-300  text-2xl mt-4 p-4 text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">In this app you can use TailwindCSS and the Anime.js lib for your front-end.</p>
             <p class="text-gray-300  text-2xl p-4 text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">You can also use StimulusJS or install React with the "yarn add react react-dom" command.</p>
             <p class="text-4xl p-4 font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">The Devise gem for User authentification is already setup. Have fun!</p>
         </div>
-      </h1>
+      </div>
     </div>
   HTML
 
